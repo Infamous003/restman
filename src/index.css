@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @import "@radix-ui/themes/styles.css";
 html, body, #root {
+  margin: 0;
   height: 100%;
+  box-sizing: border-box;
 }
 /* 
 :root {

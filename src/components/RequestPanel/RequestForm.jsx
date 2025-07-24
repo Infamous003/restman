@@ -1,8 +1,9 @@
 import { Tabs } from "radix-ui";
+import CodeEditor from "./CodeEditor";
 
 export default function RequestForm() {
     return(<>
-        <form action="">
+        <form className="h-full">
             <div className="url-section flex">
                 <select name="" className="border-y-1 border-l-1 px-2 border-gray-400 cursor-pointer font-bold focus:outline-none">
                     <option value="get" className="text-green-700 font-semibold">GET</option>
@@ -34,10 +35,8 @@ export default function RequestForm() {
                         </Tabs.Trigger>
                     </Tabs.List>
 
-                    <Tabs.Content className="TabsContent px-2" value="tab1">
-                        <p className="Text">
-                            This is the body tab section. You enter the json body here
-                        </p>                        
+                    <Tabs.Content className="TabsContent" value="tab1">
+                        <CodeEditor></CodeEditor>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab2">

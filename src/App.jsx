@@ -5,9 +5,9 @@ import ResponseViewer from './components/ResponsePanel/ResponseViewer';
 
 function App() {
   return (
-    <div className='h-full flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       <Header></Header>
-      <main className='flex-grow grid grid-cols-2'>
+      <main className='flex-1 grid grid-cols-2'>
         <RequestBuilder />
         <ResponseViewer />
       </main>
