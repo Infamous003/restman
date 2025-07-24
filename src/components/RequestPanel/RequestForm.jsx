@@ -4,7 +4,7 @@ export default function RequestForm() {
     return(<>
         <form action="">
             <div className="url-section flex">
-                <select name="" className="border-y-1 border-l-1 px-2 border-gray-400 cursor-pointer font-bold">
+                <select name="" className="border-y-1 border-l-1 px-2 border-gray-400 cursor-pointer font-bold focus:outline-none">
                     <option value="get" className="text-green-700 font-semibold">GET</option>
                     <option value="post" className="text-blue-700 font-semibold">POST</option>
                     <option value="put" className="text-yellow-700 font-semibold">PUT</option>
@@ -20,21 +20,21 @@ export default function RequestForm() {
             <div className="meta-data-section py-2">
                 <Tabs.Root className="TabsRoot flex flex-col gap-2" defaultValue="tab1">
                     <Tabs.List className="TabsList flex bg-gray-200" aria-label="Manage your account">
-                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300" value="tab1">
+                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300 data-[state=active]:bg-gray-300" value="tab1">
                             Body
                         </Tabs.Trigger>
-                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300" value="tab2">
+                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300 data-[state=active]:bg-gray-300" value="tab2">
                             Query
                         </Tabs.Trigger>
-                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300" value="tab3">
+                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300 data-[state=active]:bg-gray-300" value="tab3">
                             Header
                         </Tabs.Trigger>
-                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300" value="tab4">
+                        <Tabs.Trigger className="TabsTrigger px-2.5 py-1.5 hover:bg-gray-300 cursor-pointer focus:bg-gray-300 data-[state=active]:bg-gray-300" value="tab4">
                             Auth
                         </Tabs.Trigger>
                     </Tabs.List>
 
-                    <Tabs.Content className="TabsContent" value="tab1">
+                    <Tabs.Content className="TabsContent px-2" value="tab1">
                         <p className="Text">
                             This is the body tab section. You enter the json body here
                         </p>                        
