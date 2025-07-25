@@ -11,7 +11,7 @@ import {
 export default function RequestForm() {
     const [queryData, setQueryData] = useState([]);
     const [headerData, setHeaderData] = useState([
-        {id: 1, key: "Content-Type", value: "application/json"},
+        {id: 1, key: "Content-Type", value: "application/json", enabled: true},
     ]);
 
     return(<>
@@ -58,9 +58,10 @@ export default function RequestForm() {
                                                       id={item.id}
                                                       keyName={item.key}
                                                       valueName={item.value}
+                                                      enabled={item.enabled}
                                                       onChange={handleChange}
                                                       handleDelete={handleDelete}
-                                                      setQueryData={setQueryData} />)
+                                                      setStateFunc={setQueryData} />)
                         }
                         <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={(e) => addKeyValueForm(e, setQueryData)}>
                             + Add item
@@ -74,9 +75,10 @@ export default function RequestForm() {
                                                       id={item.id}
                                                       keyName={item.key}
                                                       valueName={item.value}
+                                                      enabled={item.enabled}
                                                       onChange={handleChange}
                                                       handleDelete={handleDelete}
-                                                      setQueryData={setHeaderData} />)
+                                                      setStateFunc={setHeaderData} />)
                         }
                         <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={(e) => addKeyValueForm(e, setHeaderData)}>
                             + Add item
