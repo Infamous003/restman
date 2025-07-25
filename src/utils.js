@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 export function addKeyValueForm(e, setStateFunc) {
     e.preventDefault()
     // Creating a new form with a random id and empty key and value
-    setStateFunc((prev) => [...prev, {id: nanoid(), key: "", value: "", isEnabled: false}])
+    setStateFunc((prev) => [...prev, {id: nanoid(), key: "", value: "", enabled: true}])
 }
 
 export function handleDelete(id, setStateFunc) {

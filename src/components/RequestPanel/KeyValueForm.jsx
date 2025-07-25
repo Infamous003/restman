@@ -6,11 +6,13 @@ export default function KeyValueForm({ id, keyName, valueName, enabled, onChange
         <input value={keyName}
                onChange={(e) => onChange(id, setStateFunc, "key", e.target.value)}
                type="text"
-               className="border-y border-l w-full border-gray-400 px-2 focus:outline-none" placeholder="Key"/>
+               disabled={!enabled}
+               className={`border-y border-l w-full border-gray-400 px-2 focus:outline-none disabled:opacity-55 disabled:cursor-not-allowed`} placeholder="Key"/>
         <input value={valueName}
                onChange={(e) => onChange(id, setStateFunc, "value", e.target.value)}
                type="text"
-               className="border-y border-x w-full border-gray-400 px-2 focus:outline-none" placeholder="Value"/>
+               disabled={!enabled}
+               className="border-y border-x w-full border-gray-400 px-2 focus:outline-none  disabled:opacity-55 disabled:cursor-not-allowed" placeholder="Value"/>
         <input type="checkbox"
                defaultChecked={enabled}
                onChange={(e) => onChange(id, setStateFunc, "enabled", e.target.checked)} 
