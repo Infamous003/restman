@@ -5,16 +5,23 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 
 export default function RequestForm() {
-    const [items, setItems] = useState([]);
+    const [queryData, setQueryData] = useState([]);
 
-    function addItem(e) {
+    function addKeyValueForm(e) {
         e.preventDefault()
-        // Storing the data of the form and not the form itself. Using this we create the forms
-        setItems((prevItems) => [...prevItems, {id: nanoid()}])
+        // Creating a new form with a random id and empty key and value
+        setQueryData((prev) => [...prev, {id: nanoid(), key: "", value: ""}])
     }
 
-    function handleDelete(formId) {
-        setItems((prevItems) => prevItems.filter((p) => p.id !== formId))
+    function handleDelete(idToDelete) {
+        setQueryData(prev => prev.filter(item => item.id !== idToDelete));
+    }
+
+    function handleChange(id, field, newValue) {
+        // Loop thru the prevList, find the item with `id`, if found, then set it's field to new value, else, set it to item itself
+        setQueryData(prev => 
+            prev.map(item => item.id == id ? {...item, [field]: newValue} : item)
+        )
     }
 
     return(<>
@@ -56,9 +63,15 @@ export default function RequestForm() {
 
                     <Tabs.Content className="TabsContent" value="tab2">
                         { 
-                            items.map((item) => <KeyValueForm key={item.id} id={item.id} handleDelete={handleDelete} />)
+                            queryData.map((item) => 
+                                        <KeyValueForm key={item.id}
+                                                      id={item.id}
+                                                      keyName={item.key}
+                                                      valueName={item.value}
+                                                      onChange={handleChange}
+                                                      handleDelete={handleDelete} />)
                         }
-                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={addItem}>
+                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={addKeyValueForm}>
                             + Add item
                         </button>                    
                     </Tabs.Content>
