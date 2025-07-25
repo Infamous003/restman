@@ -2,27 +2,14 @@ import { Tabs } from "radix-ui";
 import CodeEditor from "./CodeEditor";
 import KeyValueForm from "./KeyValueForm";
 import { useState } from "react";
-import { nanoid } from "nanoid";
+import { 
+    addKeyValueForm,
+    handleChange,
+    handleDelete
+} from "../../utils";
 
 export default function RequestForm() {
     const [queryData, setQueryData] = useState([]);
-
-    function addKeyValueForm(e) {
-        e.preventDefault()
-        // Creating a new form with a random id and empty key and value
-        setQueryData((prev) => [...prev, {id: nanoid(), key: "", value: ""}])
-    }
-
-    function handleDelete(idToDelete) {
-        setQueryData(prev => prev.filter(item => item.id !== idToDelete));
-    }
-
-    function handleChange(id, field, newValue) {
-        // Loop thru the prevList, find the item with `id`, if found, then set it's field to new value, else, set it to item itself
-        setQueryData(prev => 
-            prev.map(item => item.id == id ? {...item, [field]: newValue} : item)
-        )
-    }
 
     return(<>
         <form className="h-full" onSubmit={(e) => e.preventDefault()}>
@@ -69,17 +56,18 @@ export default function RequestForm() {
                                                       keyName={item.key}
                                                       valueName={item.value}
                                                       onChange={handleChange}
-                                                      handleDelete={handleDelete} />)
+                                                      handleDelete={handleDelete}
+                                                      setQueryData={setQueryData} />)
                         }
-                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={addKeyValueForm}>
+                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={(e) => addKeyValueForm(e, setQueryData)}>
                             + Add item
-                        </button>                    
+                        </button>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab3">
                         <p className="Text">
                             All the headers go here
-                        </p>                        
+                        </p>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab4">
