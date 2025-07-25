@@ -14,7 +14,7 @@ export default function RequestForm() {
     }
 
     function handleDelete(formId) {
-        setItems((prevItems) => prevItems.filter((p) => p.id == formId))
+        setItems((prevItems) => prevItems.filter((p) => p.id !== formId))
     }
 
     return(<>
@@ -56,7 +56,7 @@ export default function RequestForm() {
 
                     <Tabs.Content className="TabsContent" value="tab2">
                         { 
-                            items.map((item) => <KeyValueForm key={item.id} id={item.id} />)
+                            items.map((item) => <KeyValueForm key={item.id} id={item.id} handleDelete={handleDelete} />)
                         }
                         <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={addItem}>
                             + Add item
