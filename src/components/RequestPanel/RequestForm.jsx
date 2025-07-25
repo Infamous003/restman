@@ -1,9 +1,24 @@
 import { Tabs } from "radix-ui";
 import CodeEditor from "./CodeEditor";
+import KeyValueForm from "./KeyValueForm";
+import { useState } from "react";
+import { nanoid } from "nanoid";
 
 export default function RequestForm() {
+    const [items, setItems] = useState([]);
+
+    function addItem(e) {
+        e.preventDefault()
+        // Storing the data of the form and not the form itself. Using this we create the forms
+        setItems((prevItems) => [...prevItems, {id: nanoid()}])
+    }
+
+    function handleDelete(formId) {
+        setItems((prevItems) => prevItems.filter((p) => p.id == formId))
+    }
+
     return(<>
-        <form className="h-full">
+        <form className="h-full" onSubmit={(e) => e.preventDefault()}>
             <div className="url-section flex">
                 <select name="" className="border-y-1 border-l-1 px-2 border-gray-400 cursor-pointer font-bold focus:outline-none">
                     <option value="get" className="text-green-700 font-semibold">GET</option>
@@ -40,9 +55,12 @@ export default function RequestForm() {
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab2">
-                        <p className="Text">
-                            All the query parameters go here
-                        </p>                        
+                        { 
+                            items.map((item) => <KeyValueForm key={item.id} id={item.id} />)
+                        }
+                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={addItem}>
+                            + Add item
+                        </button>                    
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab3">

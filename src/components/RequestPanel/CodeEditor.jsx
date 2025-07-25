@@ -9,6 +9,6 @@ export default function CodeEditor() {
                 className="border border-gray-400 pt-2.5 h-full"
                 height="80vh"
                 language="json"
-                defaultValue='{"nigga":"niggaman"}' />
+                defaultValue='{"msg": "Type your json body here"}' />
     </>)
 }
