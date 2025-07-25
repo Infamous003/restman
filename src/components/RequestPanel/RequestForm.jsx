@@ -1,6 +1,7 @@
 import { Tabs } from "radix-ui";
 import CodeEditor from "./CodeEditor";
 import KeyValueForm from "./KeyValueForm";
+import AuthForm from "./AuthForm";
 import { useState } from "react";
 import { 
     addKeyValueForm,
@@ -13,6 +14,11 @@ export default function RequestForm() {
     const [headerData, setHeaderData] = useState([
         {id: 1, key: "Content-Type", value: "application/json", enabled: true},
     ]);
+    const [authData, setAuthData] = useState({
+        prefix: "bearer",
+        token: "",
+        enabled: true
+    });
 
     return(<>
         <form className="h-full" onSubmit={(e) => e.preventDefault()}>
@@ -86,9 +92,11 @@ export default function RequestForm() {
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab4">
-                        <p className="Text">
-                            Authentication details go here
-                        </p>                        
+                        <AuthForm prefix={authData.prefix}
+                                  token={authData.token}
+                                  enabled={authData.enabled}
+                                  authData={authData}
+                                  setAuthData={setAuthData}/>
                     </Tabs.Content>
                 </Tabs.Root>
             </div>
