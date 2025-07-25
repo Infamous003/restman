@@ -10,6 +10,9 @@ import {
 
 export default function RequestForm() {
     const [queryData, setQueryData] = useState([]);
+    const [headerData, setHeaderData] = useState([
+        {id: 1, key: "Content-Type", value: "application/json"},
+    ]);
 
     return(<>
         <form className="h-full" onSubmit={(e) => e.preventDefault()}>
@@ -65,9 +68,19 @@ export default function RequestForm() {
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab3">
-                        <p className="Text">
-                            All the headers go here
-                        </p>
+                        { 
+                            headerData.map((item) => 
+                                        <KeyValueForm key={item.id}
+                                                      id={item.id}
+                                                      keyName={item.key}
+                                                      valueName={item.value}
+                                                      onChange={handleChange}
+                                                      handleDelete={handleDelete}
+                                                      setQueryData={setHeaderData} />)
+                        }
+                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={(e) => addKeyValueForm(e, setHeaderData)}>
+                            + Add item
+                        </button>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab4">
