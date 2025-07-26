@@ -1,24 +1,33 @@
 import { nanoid } from "nanoid";
 
-export function addKeyValueForm(e, setStateFunc) {
+export function addKeyValueForm(e, sectionKey, setFormData) {
     e.preventDefault()
+    const newItem = {
+        id: nanoid(),
+        key: "",
+        value: "",
+        enabled: true
+    }
+
     // Creating a new form with a random id and empty key and value
-    setStateFunc((prev) => [...prev, {id: nanoid(), key: "", value: "", enabled: true}])
+    setFormData(prev => ({
+        ...prev,
+        [sectionKey]: [...prev[sectionKey], newItem]
+    }))
 }
 
-export function handleDelete(id, setStateFunc) {
-    setStateFunc(prev => prev.filter(item => item.id !== id));
+export function handleDelete(id, sectionKey, setFormData) {
+    // console.log(id, sectionKey)
+    setFormData(prev => ({
+        ...prev,
+        [sectionKey]: prev[sectionKey].filter(item => item.id !== id)
+    }))
 }
 
-export function handleChange(id, setStateFunc, field, newValue) {
+export function handleChange(id, field, newValue, sectionKey, setFormData) {
     // Loop thru the prevList, find the item with `id`, if found, then set it's field to new value, else, set it to item itself
-    setStateFunc(prev => 
-        prev.map(item => item.id == id ? {...item, [field]: newValue} : item)
-    )
+    setFormData(prev => ({
+        ...prev,
+        [sectionKey]: prev[sectionKey].map(item => item.id == id ? {...item, [field]: newValue} : item)
+    }))
 }
-
-// export function handleCheckBox(id, setStateFunc) {
-//     setStateFunc(prev => 
-//         prev.map
-//     )
-// }

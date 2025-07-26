@@ -3,22 +3,28 @@ import CodeEditor from "./CodeEditor";
 import KeyValueForm from "./KeyValueForm";
 import AuthForm from "./AuthForm";
 import { useState } from "react";
-import { 
-    addKeyValueForm,
-    handleChange,
-    handleDelete
-} from "../../utils";
+import {addKeyValueForm} from "../../utils";
 
 export default function RequestForm() {
-    const [queryData, setQueryData] = useState([]);
-    const [headerData, setHeaderData] = useState([
-        {id: 1, key: "Content-Type", value: "application/json", enabled: true},
-    ]);
     const [authData, setAuthData] = useState({
         prefix: "bearer",
         token: "",
         enabled: true
     });
+
+    const [formData, setFormData] = useState({
+        query: [],
+        headers: [{id: 1, 
+                   key: "Content-Type", 
+                   value: "application/json", 
+                   enabled: true
+                }],
+        auth: {
+            prefix: "bearer", 
+            token: "", 
+            enabled: true
+        },
+    })
 
     return(<>
         <form className="h-full" onSubmit={(e) => e.preventDefault()}>
@@ -59,34 +65,36 @@ export default function RequestForm() {
 
                     <Tabs.Content className="TabsContent" value="tab2">
                         { 
-                            queryData.map((item) => 
+                            formData["query"].map((item) => 
                                         <KeyValueForm key={item.id}
                                                       id={item.id}
                                                       keyName={item.key}
                                                       valueName={item.value}
                                                       enabled={item.enabled}
-                                                      onChange={handleChange}
-                                                      handleDelete={handleDelete}
-                                                      setStateFunc={setQueryData} />)
+                                                      sectionKey="query"
+                                                      setFormData={setFormData} />)
                         }
-                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={(e) => addKeyValueForm(e, setQueryData)}>
+                        <button type="button"
+                                className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full"
+                                onClick={(e) => addKeyValueForm(e, "query", setFormData)}>
                             + Add item
                         </button>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab3">
                         { 
-                            headerData.map((item) => 
+                            formData["headers"].map((item) => 
                                         <KeyValueForm key={item.id}
                                                       id={item.id}
                                                       keyName={item.key}
                                                       valueName={item.value}
                                                       enabled={item.enabled}
-                                                      onChange={handleChange}
-                                                      handleDelete={handleDelete}
-                                                      setStateFunc={setHeaderData} />)
+                                                      sectionKey="headers"
+                                                      setFormData={setFormData} />)
                         }
-                        <button type="button" className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full" onClick={(e) => addKeyValueForm(e, setHeaderData)}>
+                        <button type="button"
+                                className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full"
+                                onClick={(e) => addKeyValueForm(e, "headers", setFormData)}>
                             + Add item
                         </button>
                     </Tabs.Content>
