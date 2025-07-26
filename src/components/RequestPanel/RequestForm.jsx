@@ -6,12 +6,6 @@ import { useState } from "react";
 import {addKeyValueForm} from "../../utils";
 
 export default function RequestForm() {
-    const [authData, setAuthData] = useState({
-        prefix: "bearer",
-        token: "",
-        enabled: true
-    });
-
     const [formData, setFormData] = useState({
         query: [],
         headers: [{id: 1, 
@@ -100,11 +94,11 @@ export default function RequestForm() {
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab4">
-                        <AuthForm prefix={authData.prefix}
-                                  token={authData.token}
-                                  enabled={authData.enabled}
-                                  authData={authData}
-                                  setAuthData={setAuthData}/>
+                        <AuthForm prefix={formData["auth"]["prefix"]}
+                                  token={formData["auth"]["token"]}
+                                  enabled={formData["auth"]["enabled"]}
+                                  formData={formData}
+                                  setFormData={setFormData}/>
                     </Tabs.Content>
                 </Tabs.Root>
             </div>
