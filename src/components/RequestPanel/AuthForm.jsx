@@ -3,7 +3,7 @@ export default function AuthForm({ prefix, token, request, setRequest}) {
     return(
     <div className="flex flex-col">
         <div className="flex items-center mb-2">
-            <label htmlFor="" className="px-2 py-1 border border-gray-400 w-24">Enabled</label>
+            <label className="px-2 py-1 border border-gray-400 w-24">Enabled</label>
             <div className="px-2 py-1 flex-1 border-y border-r border-gray-400">
                 <input  type="checkbox"
                         defaultChecked={request.auth.enabled}
@@ -16,7 +16,7 @@ export default function AuthForm({ prefix, token, request, setRequest}) {
 
         <div className="flex items-center mb-2">
             <label htmlFor="token" className="w-24 px-2 py-1 border border-gray-400">Token</label>    
-            <input name="token"
+            <input id="token"
                    value={token}
                    onChange={(e) => setRequest(prev => ({
                     ...prev,
@@ -28,7 +28,7 @@ export default function AuthForm({ prefix, token, request, setRequest}) {
         </div>
         <div className="flex items-center">
             <label htmlFor="prefix" className="w-24 px-2 py-1 border border-gray-400">Prefix</label>
-            <input name="prefix"
+            <input id="prefix"
                    value={prefix}
                    onChange={(e) => setRequest(prev => ({
                     ...prev,
