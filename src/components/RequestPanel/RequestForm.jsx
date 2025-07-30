@@ -5,20 +5,20 @@ import AuthForm from "./AuthForm";
 import { useState } from "react";
 import {addKeyValueForm} from "../../utils";
 
-export default function RequestForm() {
-    const [formData, setFormData] = useState({
-        query: [],
-        headers: [{id: 1, 
-                   key: "Content-Type", 
-                   value: "application/json", 
-                   enabled: true
-                }],
-        auth: {
-            prefix: "bearer", 
-            token: "", 
-            enabled: true
-        },
-    })
+export default function RequestForm({ request, setRequest }) {
+    // const [request, setRequest] = useState({
+    //     query: [],
+    //     headers: [{id: 1, 
+    //                key: "Content-Type", 
+    //                value: "application/json", 
+    //                enabled: true
+    //             }],
+    //     auth: {
+    //         prefix: "bearer", 
+    //         token: "", 
+    //         enabled: true
+    //     },
+    // })
 
     return(<>
         <form className="h-full" onSubmit={(e) => e.preventDefault()}>
@@ -31,7 +31,7 @@ export default function RequestForm() {
                 </select>
 
 
-                <input type="text" placeholder="https://www.example.com" className="flex-auto h-8 border-y-1 px-2.5 py-0 border-gray-400  focus:outline-none focus:border-gray-400" />
+                <input type="text" name="url" placeholder="https://www.example.com" className="flex-auto h-8 border-y-1 px-2.5 py-0 border-gray-400  focus:outline-none focus:border-gray-400" />
                 
                 <button type="submit" className="bg-gray-700 px-4 text-white cursor-pointer font-bold">Send</button>
             </div>
@@ -59,46 +59,46 @@ export default function RequestForm() {
 
                     <Tabs.Content className="TabsContent" value="tab2">
                         { 
-                            formData["query"].map((item) => 
+                            request["query"].map((item) => 
                                         <KeyValueForm key={item.id}
                                                       id={item.id}
                                                       keyName={item.key}
                                                       valueName={item.value}
                                                       enabled={item.enabled}
                                                       sectionKey="query"
-                                                      setFormData={setFormData} />)
+                                                      setRequest={setRequest} />)
                         }
                         <button type="button"
                                 className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full"
-                                onClick={(e) => addKeyValueForm(e, "query", setFormData)}>
+                                onClick={(e) => addKeyValueForm(e, "query", setRequest)}>
                             + Add item
                         </button>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab3">
                         { 
-                            formData["headers"].map((item) => 
+                            request["headers"].map((item) => 
                                         <KeyValueForm key={item.id}
                                                       id={item.id}
                                                       keyName={item.key}
                                                       valueName={item.value}
                                                       enabled={item.enabled}
                                                       sectionKey="headers"
-                                                      setFormData={setFormData} />)
+                                                      setRequest={setRequest} />)
                         }
                         <button type="button"
                                 className="bg-gray-700 px-4 py-1.5 text-white cursor-pointer font-bold w-full"
-                                onClick={(e) => addKeyValueForm(e, "headers", setFormData)}>
+                                onClick={(e) => addKeyValueForm(e, "headers", setRequest)}>
                             + Add item
                         </button>
                     </Tabs.Content>
 
                     <Tabs.Content className="TabsContent" value="tab4">
-                        <AuthForm prefix={formData["auth"]["prefix"]}
-                                  token={formData["auth"]["token"]}
-                                  enabled={formData["auth"]["enabled"]}
-                                  formData={formData}
-                                  setFormData={setFormData}/>
+                        <AuthForm prefix={request["auth"]["prefix"]}
+                                  token={request["auth"]["token"]}
+                                  enabled={request["auth"]["enabled"]}
+                                  request={request}
+                                  setRequest={setRequest}/>
                     </Tabs.Content>
                 </Tabs.Root>
             </div>
