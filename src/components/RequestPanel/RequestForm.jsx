@@ -2,36 +2,44 @@ import { Tabs } from "radix-ui";
 import CodeEditor from "./CodeEditor";
 import KeyValueForm from "./KeyValueForm";
 import AuthForm from "./AuthForm";
-import { useState } from "react";
 import {addKeyValueForm} from "../../utils";
 
 export default function RequestForm({ request, setRequest }) {
-    // const [request, setRequest] = useState({
-    //     query: [],
-    //     headers: [{id: 1, 
-    //                key: "Content-Type", 
-    //                value: "application/json", 
-    //                enabled: true
-    //             }],
-    //     auth: {
-    //         prefix: "bearer", 
-    //         token: "", 
-    //         enabled: true
-    //     },
-    // })
+    function handleFormSubmit(event) {
+        event.preventDefault();
+
+        const url = request.url;
+        const method = request.method;
+        const headers = request.headers;
+        const queries = request.query;
+        const auth = request.auth;
+        
+        console.log("url: ", url);
+        console.log("method: ", method);
+        console.log("queries: ", queries);
+        console.log("headers: ", headers);
+        console.log("auth: ", auth);
+    }
 
     return(<>
-        <form className="h-full" onSubmit={(e) => e.preventDefault()}>
+        <form className="h-full" onSubmit={(e) => handleFormSubmit(e)}>
             <div className="url-section flex">
-                <select name="" className="border-y-1 border-l-1 px-2 border-gray-400 cursor-pointer font-bold focus:outline-none">
-                    <option value="get" className="text-green-700 font-semibold">GET</option>
-                    <option value="post" className="text-blue-700 font-semibold">POST</option>
-                    <option value="put" className="text-yellow-700 font-semibold">PUT</option>
-                    <option value="delete" className="text-red-700 font-semibold">DELETE</option>
+                <select onChange={(e) => setRequest(prev => ({...prev, method: e.target.value}))}
+                        name="method"
+                        className="border-y-1 border-l-1 px-2 border-gray-400 cursor-pointer font-bold focus:outline-none">
+                    <option value="GET" className="text-green-700 font-semibold">GET</option>
+                    <option value="POST" className="text-blue-700 font-semibold">POST</option>
+                    <option value="PUT" className="text-yellow-700 font-semibold">PUT</option>
+                    <option value="DELETE" className="text-red-700 font-semibold">DELETE</option>
                 </select>
 
 
-                <input type="text" name="url" placeholder="https://www.example.com" className="flex-auto h-8 border-y-1 px-2.5 py-0 border-gray-400  focus:outline-none focus:border-gray-400" />
+                <input  value={request.url}
+                        onChange={(e) => setRequest(prev => ({...prev, url: e.target.value}))}
+                        type="text" 
+                        name="url" 
+                        placeholder="https://www.example.com" 
+                        className="flex-auto h-8 border-y-1 px-2.5 py-0 border-gray-400  focus:outline-none focus:border-gray-400" />
                 
                 <button type="submit" className="bg-gray-700 px-4 text-white cursor-pointer font-bold">Send</button>
             </div>

@@ -7,18 +7,18 @@ export default function KeyValueForm({ id, keyName, valueName, enabled, sectionK
         <input value={keyName}
                onChange={(e) => handleChange(id, "key", e.target.value, sectionKey, setRequest)}
                type="text"
-               name="formKey"
+               name={`${id}-${keyName}`}
                disabled={!enabled}
                className={`border-y border-l w-full border-gray-400 px-2 focus:outline-none disabled:opacity-55 disabled:cursor-not-allowed`} placeholder="Key"/>
         <input value={valueName}
                onChange={(e) => handleChange(id, "value", e.target.value, sectionKey, setRequest)}
                type="text"
-               name="formValue"
+               name={`${id}-${valueName}`}
                disabled={!enabled}
                className="border-y border-x w-full border-gray-400 px-2 focus:outline-none  disabled:opacity-55 disabled:cursor-not-allowed" placeholder="Value"/>
         <input type="checkbox"
                defaultChecked={enabled}
-               name="enabled"
+               name={`${id}-${enabled}`}
                onChange={(e) => handleChange(id, "enabled", e.target.checked, sectionKey, setRequest)} 
                className="ml-2.5 border-2" />
         <FaTrash onClick={() => handleDelete(id, sectionKey, setRequest)} className="text-3xl ml-2.5 cursor-pointer" />
