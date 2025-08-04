@@ -1,14 +1,23 @@
 import { Tabs } from "radix-ui";
 import CodeEditor from "../RequestPanel/CodeEditor";
+import { useEffect, useState } from "react";
 
-export default function ResponseViewer() {
+export default function ResponseViewer({ response }) {
+  console.log(response)
+  const headers = []
+  for (let key in response.headers) {
+    headers.push(
+      <li>{key} : {response.headers[key]}</li>
+    )
+  }
+
   return (
   <>
     <div className="p-2.5 border-l-1 border-gray-400 h-full">
       <div className="flex gap-3 py-1">
-        <p className="px-2 bg-orange-400 ">405 Method Not Allowed</p>
-        <p className="px-2 bg-gray-200">8 ms</p>
-        <p className="px-2 bg-gray-200">18 B</p>
+        <p className="px-2 bg-orange-400 ">{ response.statusCode }</p>
+        <p className="px-2 bg-gray-200">{ response.responseTime }</p>
+        <p className="px-2 bg-gray-200">{response.responseSize} B</p>
       </div>
 
       <div className="meta-data-section py-2">
@@ -32,11 +41,14 @@ export default function ResponseViewer() {
           </Tabs.List>
 
           <Tabs.Content className="TabsContent" value="tab1">
-              <CodeEditor></CodeEditor>
+              <CodeEditor defaultVal={response.body ? JSON.stringify(response.body) : "No response body yet."}>
+              </CodeEditor>
           </Tabs.Content>
 
           <Tabs.Content className="TabsContent" value="tab2">
-            List of headers in a table
+            {
+              ...headers
+            }
           </Tabs.Content>
 
           <Tabs.Content className="TabsContent" value="tab3">

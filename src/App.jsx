@@ -21,12 +21,25 @@ function App() {
     },
   });
 
+  const [responseData, setResponseData] = useState({
+    statusCode: null,
+    detail: "",
+    body: null,
+    header: [],
+    responseTime: null,
+    responseSize: null,
+  })
+
   return (
     <div className='flex flex-col min-h-screen'>
       <Header></Header>
       <main className='flex-1 grid grid-cols-2'>
-        <RequestBuilder request={requestData} setRequest={setRequestData} />
-        <ResponseViewer />
+        <RequestBuilder request={requestData}
+                        setRequest={setRequestData}
+                        response={responseData}
+                        setResponse={setResponseData} />
+
+        <ResponseViewer response={responseData}/>
       </main>
     </div>
   )

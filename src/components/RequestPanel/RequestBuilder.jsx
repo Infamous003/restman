@@ -1,9 +1,12 @@
 import RequestForm from "./RequestForm"
 
-export default function RequestBuilder({ request, setRequest }) {
+export default function RequestBuilder({ request, setRequest, response, setResponse }) {
     return(<>
         <div className="p-2.5 border-r-1 border-gray-400 h-full">
-            <RequestForm request={request} setRequest={setRequest} />
+            <RequestForm request={request}
+                         setRequest={setRequest}
+                         response={response}
+                         setResponse={setResponse} />
         </div>
     </>)
 }

@@ -3,22 +3,54 @@ import CodeEditor from "./CodeEditor";
 import KeyValueForm from "./KeyValueForm";
 import AuthForm from "./AuthForm";
 import {addKeyValueForm} from "../../utils";
+import { useState } from "react";
 
-export default function RequestForm({ request, setRequest }) {
-    function handleFormSubmit(event) {
+export default function RequestForm({ request, setRequest, response, setResponse }) {
+    function formatTime(time) {
+        if (time >= 1000) {
+            return (time / 1000).toFixed(2) + " s";
+        }
+        return time.toFixed(0) + " ms";
+    }
+
+    async function handleFormSubmit(event) {
         event.preventDefault();
 
         const url = request.url;
         const method = request.method;
-        const headers = request.headers;
+        let headers = {};
         const queries = request.query;
         const auth = request.auth;
         
-        console.log("url: ", url);
-        console.log("method: ", method);
-        console.log("queries: ", queries);
-        console.log("headers: ", headers);
-        console.log("auth: ", auth);
+        request.headers.forEach(header => {
+            headers[header.key.toLowerCase()] = header.value
+        })
+
+        const start = performance.now();
+        await fetch(url, {
+            method: method,
+            headers: {...headers},
+        })
+        .then(async response => {
+            const end = performance.now();
+            const responseTime = end - start;
+            const body = await response.json();
+            const responseHeaders = {};
+
+            response.headers.forEach((value, key) => {
+                responseHeaders[key] = value;
+            });
+            responseHeaders["Date"] = response.headers.get("date");
+            responseHeaders["Size"] = response.headers.get("size");
+            setResponse({
+                statusCode: response.status,
+                detail: response.statusText,
+                body: body,
+                headers: responseHeaders,
+                responseTime: formatTime(responseTime),
+                responseSize: responseHeaders["content-length"]
+            });
+        })
     }
 
     return(<>
